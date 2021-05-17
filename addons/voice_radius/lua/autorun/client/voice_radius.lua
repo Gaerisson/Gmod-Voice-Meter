@@ -20,6 +20,7 @@ local show_voice_radius = CreateClientConVar( "show_voice_radius", 1, true, fals
 
 local function DrawVoicePanel()
     if LocalPlayer():IsTyping() then return end
+    if !LocalPlayer():IsSpeaking() then return end
 	
     if show_voice_radius:GetInt() == 1 then
         local possphere = {} -- ents.FindInSphere( LocalPlayer():GetPos(), 2904 )
@@ -27,7 +28,7 @@ local function DrawVoicePanel()
         local lvlcol = Color(0,0,0)
 
 		table.Merge(possphere,LLSpTable)
-        for k,v in pairs( player.GetHumans() ) do
+        for k,v in pairs( player.GetAll() ) do
 			
             local pos = LocalPlayer():GetPos():Distance( v:GetPos() )
 
@@ -73,9 +74,9 @@ local function DrawVoicePanel()
             end
 
             if(v:GetFriendStatus()=="friend")then
-                draw.SimpleText( v:GetName().." ["..pmeter.."m]", "ConText" , ScrW()-60, ScrH()/2+(k*9), Color( 127, 255, 127 ), TEXT_ALIGN_RIGHT )
+                draw.SimpleText( v:GetName().." ["..pmeter.."m] ", "ConText" , ScrW()-60, ScrH()/2+(k*9), Color( 127, 255, 127 ), TEXT_ALIGN_RIGHT )
             else
-                draw.SimpleText( v:GetName().." ["..pmeter.."m]", "ConText" , ScrW()-60, ScrH()/2+(k*9), team.GetColor(v:Team()) , TEXT_ALIGN_RIGHT )
+                draw.SimpleText( v:GetName().." ["..pmeter.."m] ", "ConText" , ScrW()-60, ScrH()/2+(k*9), team.GetColor(v:Team()) , TEXT_ALIGN_RIGHT )
             end
             draw.SimpleText( "["..lvl.." ]", "ConText" , ScrW()-15, ScrH()/2+(k*9), lvlcol , TEXT_ALIGN_RIGHT )
             draw.SimpleText( voicest, "ConText" , ScrW()-4, ScrH()/2+(k*9), voice_col , TEXT_ALIGN_RIGHT )
