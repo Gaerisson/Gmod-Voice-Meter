@@ -16,12 +16,12 @@ surface.CreateFont( "ConText", {
     outline = false,
 } )
 
-local show_voice_player = CreateClientConVar( "show_voice_player", 1, true, false )
+local show_voice_radius = CreateClientConVar( "show_voice_radius", 1, true, false )
 
 local function DrawVoicePanel()
     if LocalPlayer():IsTyping() then return end
 	
-    if show_voice_player:GetInt() == 1 then
+    if show_voice_radius:GetInt() == 1 then
         local possphere = {} -- ents.FindInSphere( LocalPlayer():GetPos(), 2904 )
         local lvl = ""
         local lvlcol = Color(0,0,0)
